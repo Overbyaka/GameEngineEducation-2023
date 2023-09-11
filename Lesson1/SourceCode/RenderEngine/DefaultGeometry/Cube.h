@@ -2,8 +2,10 @@
 
 #include "../RenderObject.h"
 
-namespace
+
+class Cube : public RenderObject
 {
+private:
 	struct PosColorVertex
 	{
 		float m_x;
@@ -11,10 +13,6 @@ namespace
 		float m_z;
 		uint32_t m_abgr;
 	};
-};
-
-class Cube : public RenderObject
-{
 public:
 	Cube();
 

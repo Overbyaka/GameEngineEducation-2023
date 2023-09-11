@@ -33,7 +33,8 @@ CRenderEngine::CRenderEngine(HINSTANCE hInstance)
 	bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
 	bgfx::setViewRect(0, 0, 0, bgfx::BackbufferRatio::Equal);
 
-	m_defaultCube = new Cube();
+	//m_defaultCube = new Cube();
+	m_defaultPyramide = new Pyramide();
 }
 
 CRenderEngine::~CRenderEngine()
@@ -101,10 +102,15 @@ void CRenderEngine::Update()
 	bx::mtxProj(proj, 60.0f, float(m_Width) / float(m_Height), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
 	bgfx::setViewTransform(0, view, proj);
 
-	bgfx::setVertexBuffer(0, m_defaultCube->GetVertexBuffer());
-	bgfx::setIndexBuffer(m_defaultCube->GetIndexBuffer());
+	//bgfx::setVertexBuffer(0, m_defaultCube->GetVertexBuffer());
+	//bgfx::setIndexBuffer(m_defaultCube->GetIndexBuffer());
 
-	bgfx::submit(0, m_defaultCube->GetProgramHandle());
+	//bgfx::submit(0, m_defaultCube->GetProgramHandle());
+
+	bgfx::setVertexBuffer(0, m_defaultPyramide->GetVertexBuffer());
+	bgfx::setIndexBuffer(m_defaultPyramide->GetIndexBuffer());
+
+	bgfx::submit(0, m_defaultPyramide->GetProgramHandle());
 
 	bgfx::touch(0);
 
