@@ -94,8 +94,11 @@ HWND CRenderEngine::InitMainWindow(HINSTANCE hInstance)
 
 void CRenderEngine::Update()
 {
+	float x = r * (float) cos(alpha);
+	float y = r * (float) sin(alpha);
 	const bx::Vec3 at = { 0.0f, 0.0f,  0.0f };
-	const bx::Vec3 eye = { 0.0f, 10.0f, -5.0f };
+	const bx::Vec3 eye = { x, y, -2.5f };
+	alpha += 0.01f;
 	float view[16];
 	bx::mtxLookAt(view, eye, at);
 	float proj[16];

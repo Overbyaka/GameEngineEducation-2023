@@ -21,5 +21,5 @@ Pyramide::Pyramide()
 		bgfx::makeRef(s_pyramideTriList, sizeof(s_pyramideTriList))
 	);
 
-	m_ProgramHandle = ShadersHelper::LoadProgram("vs_pyramides", "fs_pyramides");
+	m_ProgramHandle = ShadersHelper::LoadProgram("vs_cubes", "fs_cubes");
 }

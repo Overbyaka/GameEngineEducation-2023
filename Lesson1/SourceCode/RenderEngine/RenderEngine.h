@@ -19,6 +19,9 @@ private:
 	HWND InitMainWindow(HINSTANCE hInstance);
 	HWND m_hwnd = nullptr;
 
+	float r = 5.0f;
+	float alpha = 0.0f;
+
 	long m_Width = 800;
 	long m_Height = 600;
 	//Cube* m_defaultCube;
