@@ -11,6 +11,7 @@
 #include "RenderThread.h"
 #include "CubeGameObject.h"
 #include "GameTimer.h"
+//#include "INIReader.h"
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -36,6 +37,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     timer.Start();
     timer.Reset();
 
+    //INIReader reader("../Assets/Configs/actionmap.ini");
+
+    /*if (reader.ParseError() < 0) {
+        //"Can't load '.ini'";
+        return 1;
+    }
+    char config[2];
+    config[0] = reader.Get("Keyboard", "GoLeft", "UNKNOWN")[0];
+    config[1] = reader.Get("Keyboard", "GoRight", "UNKNOWN")[0];*/
+
     // Main message loop:
     while (msg.message != (WM_QUIT | WM_CLOSE))
     {
@@ -46,10 +57,26 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            float t = 0;
+            /*float t = 0;
             timer.Tick();
             t = sin(timer.TotalTime())*2;
-            cube->SetPosition(t, 0.0f, 0.0f);
+            cube->SetPosition(t, 0.0f, 0.0f);*/
+
+            float speed = 0.2f;
+
+            switch (msg.message)
+            {
+                case WM_CHAR: // WM_KEYDOWN doesnt work ??
+                    if (GetAsyncKeyState(0x41)) // A
+                        cube->AddX(-speed);
+                    else if (GetAsyncKeyState(0x44)) // D
+                        cube->AddX(speed);
+                    break;
+                default:
+                    break;
+            }
+
+
 
             renderThread->OnEndFrame();
         }

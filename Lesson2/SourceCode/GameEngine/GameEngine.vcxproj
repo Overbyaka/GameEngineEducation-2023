@@ -175,12 +175,14 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="INIReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CubeGameObject.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="INIReader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
