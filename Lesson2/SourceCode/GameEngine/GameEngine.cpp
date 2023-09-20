@@ -11,8 +11,7 @@
 #include "RenderThread.h"
 #include "CubeGameObject.h"
 #include "GameTimer.h"
-#include "E:\Programms\GameEngineEducation-2023\SDKs\inih\include\INIReader.h"
-#include "E:\Programms\GameEngineEducation-2023\SDKs\inih\include\ini.h"
+#include "INIReader.h"
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -38,15 +37,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     timer.Start();
     timer.Reset();
 
-    INIReader reader("../Assets/Configs/actionmap.ini");
+    INIReader reader("actionmap.ini");
 
-    /*if (reader.ParseError() < 0) {
+    if (reader.ParseError() < 0) {
         //"Can't load '.ini'";
         return 1;
     }
     char config[2];
     config[0] = reader.Get("Keyboard", "GoLeft", "UNKNOWN")[0];
-    config[1] = reader.Get("Keyboard", "GoRight", "UNKNOWN")[0];*/
+    config[1] = reader.Get("Keyboard", "GoRight", "UNKNOWN")[0];
 
     // Main message loop:
     while (msg.message != (WM_QUIT | WM_CLOSE))
@@ -68,9 +67,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             switch (msg.message)
             {
                 case WM_CHAR: // WM_KEYDOWN doesnt work ??
-                    if (GetAsyncKeyState(0x41)) // A
+                    if (GetAsyncKeyState(VkKeyScanEx(config[0], GetKeyboardLayout(GetCurrentThreadId())))) // A
                         cube->AddX(-speed);
-                    else if (GetAsyncKeyState(0x44)) // D
+                    else if (GetAsyncKeyState(VkKeyScanEx(config[1], GetKeyboardLayout(GetCurrentThreadId())))) // D
                         cube->AddX(speed);
                     break;
                 default:
