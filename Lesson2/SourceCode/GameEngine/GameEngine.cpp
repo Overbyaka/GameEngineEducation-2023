@@ -11,7 +11,8 @@
 #include "RenderThread.h"
 #include "CubeGameObject.h"
 #include "GameTimer.h"
-//#include "INIReader.h"
+#include "E:\Programms\GameEngineEducation-2023\SDKs\inih\include\INIReader.h"
+#include "E:\Programms\GameEngineEducation-2023\SDKs\inih\include\ini.h"
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -37,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     timer.Start();
     timer.Reset();
 
-    //INIReader reader("../Assets/Configs/actionmap.ini");
+    INIReader reader("../Assets/Configs/actionmap.ini");
 
     /*if (reader.ParseError() < 0) {
         //"Can't load '.ini'";
