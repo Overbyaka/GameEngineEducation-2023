@@ -12,12 +12,18 @@ void register_ecs_control_systems(flecs::world &ecs)
     {
       inputQuery.each([&](InputHandlerPtr input)
       {
-        float deltaVel = 0.f;
+        float deltaVelX = 0.f, deltaVelY = 0.f;
         if (input.ptr->GetInputState().test(eIC_GoLeft))
-          deltaVel -= spd;
+          deltaVelX -= spd;
         if (input.ptr->GetInputState().test(eIC_GoRight))
-          deltaVel += spd;
-        vel.x += deltaVel * e.delta_time();
+          deltaVelX += spd;
+        if (input.ptr->GetInputState().test(eIC_GoUp))
+            deltaVelY += spd;
+        if (input.ptr->GetInputState().test(eIC_GoDown))
+            deltaVelY -= spd;
+
+        vel.x += deltaVelX * e.delta_time();
+        vel.z += deltaVelY * e.delta_time();
       });
     });
 
@@ -33,4 +39,3 @@ void register_ecs_control_systems(flecs::world &ecs)
       });
     });
 }
-
