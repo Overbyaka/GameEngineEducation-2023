@@ -15,7 +15,7 @@ public:
 	void Update();
 
 	const std::bitset<eIC_Max>& GetInputState() const;
-
+	bool Test(size_t key);
 private:
 	void LoadConfiguration();
 
@@ -40,4 +40,3 @@ private:
 
 	std::bitset<eIC_Max> m_InputState;
 };
-

@@ -2,11 +2,12 @@
 
 #include <sol/sol.hpp>
 
-#include "IScriptProxy.h"
 
-
-class SCRIPTSYSTEM_API CScriptProxy final : public IScriptProxy
+class ScriptProxy
 {
+public:
+	void Init(const char* filename);
+	void Update();
 private:
 	sol::state lua_script;
 };
