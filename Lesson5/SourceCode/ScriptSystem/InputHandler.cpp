@@ -1,5 +1,5 @@
 #include "InputHandler.h"
-
+#pragma warning(disable:4267)
 #include <windows.h>
 #include <algorithm>
 #include <cassert>

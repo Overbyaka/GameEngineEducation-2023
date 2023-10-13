@@ -4,10 +4,10 @@
 #include "ecsControl.h"
 #include "ecsPhys.h"
 
-EntitySystem::EntitySystem(RenderEngine* renderEngine, InputHandler* inputHandler)
+EntitySystem::EntitySystem(RenderEngine* renderEngine, ScriptProxy* scriptProxy)
 {
-    ecs.entity("inputHandler")
-        .set(InputHandlerPtr{ inputHandler });
+    ecs.entity("scriptProxy")
+        .set(ScriptProxyPtr{ scriptProxy });
     ecs.entity("renderEngine")
         .set(RenderEnginePtr{ renderEngine });
 

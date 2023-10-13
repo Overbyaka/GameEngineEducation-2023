@@ -1,8 +1,8 @@
 #pragma once
 
-struct InputHandlerPtr
+struct ScriptProxyPtr
 {
-  class InputHandler* ptr;
+	class ScriptProxy* ptr;
 };
 
 struct RenderEnginePtr

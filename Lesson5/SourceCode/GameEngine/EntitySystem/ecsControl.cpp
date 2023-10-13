@@ -2,35 +2,34 @@
 #include "ecsSystems.h"
 #include "ecsPhys.h"
 #include "flecs.h"
-#include "../InputHandler.h"
+#include "../ScriptSystem/ScriptProxy.h"
 
+void init_script(flecs::world& ecs, sol::state& lua, Velocity vel, Speed spd, Position pos, BouncePlane plane, JumpSpeed jumpconst)
+{
+    lua["vel_x"] = vel.x;
+    lua["vel_y"] = vel.y;
+    lua["speed"] = spd;
+    lua["pos_x"] = pos.x;
+    lua["pos_y"] = pos.y;
+    lua["pos_z"] = pos.z;
+    lua["plane_x"] = plane.x;
+    lua["plane_y"] = plane.y;
+    lua["plane_z"] = plane.z;
+    lua["plane_w"] = plane.w;
+    lua["jump_speed"] = jumpconst.val;
+}
 void register_ecs_control_systems(flecs::world &ecs)
 {
-  static auto inputQuery = ecs.query<InputHandlerPtr>();
-  ecs.system<Velocity, const Speed, const Controllable>()
-    .each([&](flecs::entity e, Velocity &vel, const Speed &spd, const Controllable &)
+  static auto inputQuery = ecs.query<ScriptProxyPtr>();
+  ecs.system<Velocity, const Speed, const Position, const BouncePlane, const JumpSpeed, const Controllable>()
+    .each([&](flecs::entity e, Velocity& vel, const Speed& spd, const Position& pos, const BouncePlane& plane, const JumpSpeed& jumpconst, const Controllable &)
     {
-      inputQuery.each([&](InputHandlerPtr input)
+      inputQuery.each([&](ScriptProxyPtr input)
       {
-        float deltaVel = 0.f;
-        if (input.ptr->GetInputState().test(eIC_GoLeft))
-          deltaVel -= spd;
-        if (input.ptr->GetInputState().test(eIC_GoRight))
-          deltaVel += spd;
-        vel.x += deltaVel * e.delta_time();
-      });
-    });
-
-  ecs.system<const Position, Velocity, const Controllable, const BouncePlane, const JumpSpeed>()
-    .each([&](const Position &pos, Velocity &vel, const Controllable &, const BouncePlane &plane, const JumpSpeed &jump)
-    {
-      inputQuery.each([&](InputHandlerPtr input)
-      {
-        constexpr float planeEpsilon = 0.1f;
-        if (plane.x*pos.x + plane.y*pos.y + plane.z*pos.z < plane.w + planeEpsilon)
-          if (input.ptr->GetInputState().test(eIC_Jump))
-            vel.y = jump.val;
+              init_script(ecs, input.ptr->GetLua(), vel, spd, pos, plane, jumpconst);
+              input.ptr->Init("../../../Assets/scripts/movable.lua");
       });
     });
 }
+
 
