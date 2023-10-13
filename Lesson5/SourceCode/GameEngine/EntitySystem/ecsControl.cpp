@@ -4,8 +4,9 @@
 #include "flecs.h"
 #include "../ScriptSystem/ScriptProxy.h"
 
-void init_script(flecs::world& ecs, sol::state& lua, Velocity vel, Speed spd, Position pos, BouncePlane plane, JumpSpeed jumpconst)
+void init_script(flecs::world& ecs, sol::state& lua, Velocity vel, Speed spd, Position pos, BouncePlane plane, JumpSpeed jumpconst, float dt)
 {
+    lua = NULL;
     lua["vel_x"] = vel.x;
     lua["vel_y"] = vel.y;
     lua["speed"] = spd;
@@ -17,6 +18,7 @@ void init_script(flecs::world& ecs, sol::state& lua, Velocity vel, Speed spd, Po
     lua["plane_z"] = plane.z;
     lua["plane_w"] = plane.w;
     lua["jump_speed"] = jumpconst.val;
+    lua["delta_time"] = dt;
 }
 void register_ecs_control_systems(flecs::world &ecs)
 {
@@ -26,8 +28,12 @@ void register_ecs_control_systems(flecs::world &ecs)
     {
       inputQuery.each([&](ScriptProxyPtr input)
       {
-              init_script(ecs, input.ptr->GetLua(), vel, spd, pos, plane, jumpconst);
+              init_script(ecs, input.ptr->GetLua(), vel, spd, pos, plane, jumpconst, e.delta_time());
+              input.ptr->ScriptMove();
               input.ptr->Init("../../../Assets/scripts/movable.lua");
+              sol::state &lua = input.ptr->GetLua();
+              vel.x = lua["vel_x"];
+              vel.y = lua["vel_y"];
       });
     });
 }

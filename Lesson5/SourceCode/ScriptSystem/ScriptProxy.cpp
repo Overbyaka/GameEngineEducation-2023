@@ -17,8 +17,13 @@ void ScriptProxy::Init(const char* filename)
 
 	//lua_script.new_usertype<InputHandler>("InputHandler", 
 		//"TestInput", &(InputHandler::Test));
-
-
+	
+	/*try {
+		auto result1 = lua_script.safe_script_file(filename);
+	}
+	catch (const sol::error& e) {
+		std::cout << "an expected error has occurred: " << e.what() << std::endl;
+	}*/
 	lua_script.safe_script_file(filename);
 }
 void ScriptProxy::UpdateInputHandler()
@@ -35,8 +40,10 @@ void ScriptProxy::ScriptMove()
 	lua_script["eIC_GoLeft"] = eIC_GoLeft;
 	lua_script["eIC_GoRight"] = eIC_GoRight;
 	lua_script["eIC_Jump"] = eIC_Jump;
-	lua_script.new_usertype<std::bitset<eIC_Max>>("Bitset",
+	/*lua_script.new_usertype<std::bitset<eIC_Max>>("Bitset",
 		"test", &std::bitset<eIC_Max>::test);
 	lua_script.new_usertype<InputHandler>("InputHandler",
-		"getInputState", &InputHandler::GetInputState);
+		"getInputState", &InputHandler::GetInputState);*/
+	lua_script["input"] = inputHandler;
+	lua_script.new_usertype<InputHandler>("InputHandler", "test", &InputHandler::Test);
 }
